@@ -29,6 +29,7 @@ async function run() {
 
     const paintingCollection=client.db('paintingDB').collection('painting')
     const craftCollection=client.db('craftDB').collection('craft')
+    const userCollection=client.db('craftDB').collection('user')
 
     app.get('/painting', async(req,res)=>{
       const cursor=paintingCollection.find();
@@ -53,6 +54,21 @@ async function run() {
     const result=await craftCollection.insertOne(newCraft)
     res.send(result)
    }) 
+
+  //  user related api
+app.get('/user',async(req,res)=>{
+  const cursor=userCollection.find();
+  const users=await cursor.toArray();
+  res.send(users)
+})
+
+  app.post('/user',async(req,res)=>{
+    const user=req.body;
+    console.log(user);
+    const result=await userCollection.insertOne(user);
+    res.send(result)
+  })
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
