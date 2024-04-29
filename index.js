@@ -42,6 +42,16 @@ async function run() {
       res.send(result);
     })
 
+    app.get('/myProduct', async (req, res) => {
+      const userEmail = req.query.email;
+      console.log(userEmail);
+      const result = await craftCollection.find({ email: userEmail }).toArray();
+      res.send(result);
+  });
+  
+
+
+
   //  app.post('/painting',async(req,res)=>{
   //   const newPainting=req.body;
   //   console.log(newPainting);
@@ -62,12 +72,12 @@ app.get('/user',async(req,res)=>{
   res.send(users)
 })
 
-  app.post('/user',async(req,res)=>{
-    const user=req.body;
-    console.log(user);
-    const result=await userCollection.insertOne(user);
-    res.send(result)
-  })
+  // app.post('/user',async(req,res)=>{
+  //   const user=req.body;
+  //   console.log(user);
+  //   const result=await userCollection.insertOne(user);
+  //   res.send(result)
+  // })
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
