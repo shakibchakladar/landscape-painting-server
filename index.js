@@ -63,6 +63,29 @@ async function run() {
    }) 
 
 
+   app.put('/alCraft/:id',async(req,res)=>{
+    const id =req.params.id;
+    const filter={_id:new ObjectId(id)}
+    const options={upsert :true}
+    const updatedCraft=req.body;
+    const craft={
+      $set:{
+        name:updatedCraft.name,
+        subcategory:updatedCraft.subcategory,
+        price:updatedCraft.price,
+        image:updatedCraft.image,
+        short_description:updatedCraft.short_description,
+        ratting:updatedCraft.ratting,
+        Customization:updatedCraft.Customization,
+        ProccessingTime:updatedCraft.ProccessingTime,
+        email:updatedCraft.email
+      }
+    }
+    const result=await craftCollection.updateOne(filter,craft,options);
+    res.send(result);
+
+   })
+
 app.delete('/alCraft/:id',async(req,res)=>{
   const id =req.params.id;
   const query={_id:new ObjectId(id)}
@@ -72,6 +95,12 @@ app.delete('/alCraft/:id',async(req,res)=>{
 })
 
 
+app.get('/alCraft/:id',async(req,res)=>{
+  const id=req.params.id
+  const query={_id:new ObjectId(id)}
+  const result=await craftCollection.findOne(query);
+  res.send(result)
+})
 
   //  user related api
 app.get('/user',async(req,res)=>{
