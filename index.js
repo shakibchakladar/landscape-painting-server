@@ -55,21 +55,23 @@ async function run() {
     res.send(result)
   })
 
-
-
-
-  //  app.post('/painting',async(req,res)=>{
-  //   const newPainting=req.body;
-  //   console.log(newPainting);
-  //   const result=await paintingCollection.insertOne(newPainting)
-  //   res.send(result)
-  //  }) 
    app.post('/alCraft',async(req,res)=>{
     const newCraft=req.body;
     console.log(newCraft);
     const result=await craftCollection.insertOne(newCraft)
     res.send(result)
    }) 
+
+
+app.delete('/alCraft/:id',async(req,res)=>{
+  const id =req.params.id;
+  const query={_id:new ObjectId(id)}
+  const result=await craftCollection.deleteOne(query);
+  console.log(result);
+  res.send(result)
+})
+
+
 
   //  user related api
 app.get('/user',async(req,res)=>{
